@@ -1,14 +1,16 @@
 import React from "react";
-
 import "./form.scss";
 
 function Form(props) {
-
- function handleSubmit (e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    let method = e.target.select.value;
+    let url = e.target.url.value;
+    let reqBody = e.target.text.value;
     const formData = {
-      method: "GET",
-      url: "https://pokeapi.co/api/v2/pokemon",
+      method: method,
+      url: url,
+      reqBody: reqBody,
     };
     props.handleApiCall(formData);
   };
@@ -16,21 +18,34 @@ function Form(props) {
   return (
     <>
       <form onSubmit={handleSubmit}>
+        <label className="methods" for="select">
+          {" "}
+          select hte method you want{" "}
+        </label>
+        <select name="select" id="select">
+          <option id="get" value="get">
+            GET
+          </option>
+          <option id="post" value="post">
+            POST
+          </option>
+          <option id="put" value="put">
+            PUT
+          </option>
+          <option id="delete" value="delete">
+            DELETE
+          </option>
+        </select>
+
         <label>
           <span>URL: </span>
-          <input name="url" type="text" />
+          <input name="url" type="text" id="url" />
           <button type="submit">GO!</button>
         </label>
-        <label className="methods">
-          <span id="get">GET</span>
-          <span id="post">POST</span>
-          <span id="put">PUT</span>
-          <span id="delete">DELETE</span>
-        </label>
+    
       </form>
     </>
   );
 }
-
 
 export default Form;
